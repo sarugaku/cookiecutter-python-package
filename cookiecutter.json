@@ -1,0 +1,14 @@
+{
+    "author": "",
+    "email": "",
+    "github_username": "sarugaku",
+    "project_name": "Python Package",
+    "project_description": "A Python package.",
+    "repo_name": "{{ cookiecutter.project_name.replace(' ', '-').replace('.', '').lower() }}",
+    "package_name": "{{ cookiecutter.repo_name.replace('-', '_') }}",
+    "year": "",
+
+    "_copy_without_render": [
+        "*.jinja2"
+    ]
+}
