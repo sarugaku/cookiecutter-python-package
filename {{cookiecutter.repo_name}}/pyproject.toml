@@ -1,5 +1,5 @@
 [build-system]
-requires = ['setuptools', 'wheel']
+requires = ['setuptools>=36.2.2', 'wheel>=0.28.0']
 
 [tool.towncrier]
 package = '{{ cookiecutter.package_name }}'
