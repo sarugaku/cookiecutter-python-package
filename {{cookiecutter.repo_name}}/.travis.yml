@@ -7,10 +7,10 @@ matrix:
   fast_finish: true
 
 install:
-  - "pip install --upgrade pip pytest pytest-xdist"
-  - "pip install -e . "
+  - "python -m pip install --upgrade pip"
+  - "python -m pip install -e .[tests]"
 script:
-    - "py.test -v -n 8 tests/"
+  - "python -m py.test -v -n 8 tests/"
 
 jobs:
   include:
@@ -25,13 +25,13 @@ jobs:
     - stage: packaging
       python: "3.6"
       install:
-        - "pip install --upgrade check-manifest readme-renderer"
-      script: 
+        - "python -m pip install --upgrade check-manifest readme-renderer"
+      script:
         - "python setup.py check -m -r -s"
     - stage: coverage
       python: "3.6"
       install:
-        - "pip install --upgrade pip pytest pytest-cov pytest-timeout pytest-xdist"
-        - "pip install --upgrade -e ."
+        - "python -m pip install --upgrade pip"
+        - "python -m pip install --upgrade -e .[tests]"
       script:
-        - "pytest --timeout 300 --cov={{cookiecutter.package_name}} --cov-report=term-missing --cov-report=xml --cov-report=html tests"
+        - "python -m pytest -n auto --timeout 300 --cov=pip_shims --cov-report=term-missing --cov-report=xml --cov-report=html tests"
