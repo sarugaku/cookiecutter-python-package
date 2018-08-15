@@ -1,7 +1,7 @@
 [run]
 branch = True
 parallel = True
-source = src/{ cookiecutter.package_name }}/
+source = src/{{ cookiecutter.package_name }}/
 
 [report]
 # Regexes for lines to exclude from consideration
