@@ -16,7 +16,7 @@ install:
   - "python -m pip install --upgrade pip"
   - "python -m pip install -e .[tests]"
 
-build: off
+build: false
 
 test_script:
   # Shorten paths, workaround https://bugs.python.org/issue18199
