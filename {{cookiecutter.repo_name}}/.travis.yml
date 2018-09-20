@@ -34,4 +34,4 @@ jobs:
         - "python -m pip install --upgrade pip"
         - "python -m pip install --upgrade -e .[tests]"
       script:
-        - "python -m pytest -n auto --timeout 300 --cov=pip_shims --cov-report=term-missing --cov-report=xml --cov-report=html tests"
+        - "python -m pytest -n auto --timeout 300 --cov={{ cookiecutter.package_name }} --cov-report=term-missing --cov-report=xml --cov-report=html tests"
