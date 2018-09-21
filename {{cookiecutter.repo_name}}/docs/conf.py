@@ -22,7 +22,7 @@ sys.path.insert(0, PACKAGE_DIR)
 # -- Project information -----------------------------------------------------
 
 project = '{{ cookiecutter.project_name }}'
-copyright = '2018, cookiecutter.author <{{ cookiecutter.email }}>'
+copyright = '{{ cookiecutter.year }}, {{ cookiecutter.author }} <{{ cookiecutter.email }}>'
 author = '{{ cookiecutter.author }} <{{ cookiecutter.email }}>'
 
 # The short X.Y version
