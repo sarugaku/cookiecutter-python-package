@@ -7,10 +7,10 @@ matrix:
   fast_finish: true
 
 install:
-  - "python -m pip install --upgrade pip"
+  - "python -m pip install --upgrade pip pytest-timeout"
   - "python -m pip install -e .[tests]"
 script:
-  - "python -m py.test -v -n 8 tests/"
+  - "python -m pytest -v -n 8 tests/"
 
 jobs:
   include:
@@ -31,7 +31,7 @@ jobs:
     - stage: coverage
       python: "3.6"
       install:
-        - "python -m pip install --upgrade pip"
+        - "python -m pip install --upgrade pip pytest-timeout pytest-cov"
         - "python -m pip install --upgrade -e .[tests]"
       script:
         - "python -m pytest -n auto --timeout 300 --cov={{ cookiecutter.package_name }} --cov-report=term-missing --cov-report=xml --cov-report=html tests"
