@@ -19,6 +19,15 @@ INIT_PY = ROOT.joinpath('src', PACKAGE_NAME, '__init__.py')
 
 
 @invoke.task()
+def typecheck(ctx):
+    src_dir = ROOT / "src" / PACKAGE_NAME
+    src_dir = src_dir.as_posix()
+    config_file = ROOT / "setup.cfg"
+    env = {"MYPYPATH": src_dir}
+    ctx.run(f"mypy {src_dir} --config-file={config_file}", env=env)
+
+
+@invoke.task()
 def clean(ctx):
     """Clean previously built package artifacts.
     """
@@ -44,50 +53,50 @@ def _write_version(v):
     lines = []
     with INIT_PY.open() as f:
         for line in f:
-            if line.startswith('__version__ = '):
-                line = f'__version__ = {repr(str(v))}\n'
+            if line.startswith("__version__ = "):
+                line = f"__version__ = {repr(str(v))}\n".replace("'", '"')
             lines.append(line)
-    with INIT_PY.open('w', newline='\n') as f:
-        f.write(''.join(lines))
+    with INIT_PY.open("w", newline="\n") as f:
+        f.write("".join(lines))
 
 
 def _render_log():
     """Totally tap into Towncrier internals to get an in-memory result.
     """
     config = load_config(ROOT)
-    definitions = config['types']
+    definitions = config["types"]
     fragments, fragment_filenames = find_fragments(
-        pathlib.Path(config['directory']).absolute(),
-        config['sections'],
+        pathlib.Path(config["directory"]).absolute(),
+        config["sections"],
         None,
         definitions,
     )
     rendered = render_fragments(
-        pathlib.Path(config['template']).read_text(encoding='utf-8'),
-        config['issue_format'],
+        pathlib.Path(config["template"]).read_text(encoding="utf-8"),
+        config["issue_format"],
         split_fragments(fragments, definitions),
         definitions,
-        config['underlines'][1:],
+        config["underlines"][1:],
         False,  # Don't add newlines to wrapped text.
     )
     return rendered
 
 
-REL_TYPES = ('major', 'minor', 'patch',)
+REL_TYPES = ("major", "minor", "patch", "post")
 
 
 def _bump_release(version, type_):
     if type_ not in REL_TYPES:
-        raise ValueError(f'{type_} not in {REL_TYPES}')
+        raise ValueError(f"{type_} not in {REL_TYPES}")
     index = REL_TYPES.index(type_)
-    next_version = version.base_version().bump_release(index)
-    print(f'[bump] {version} -> {next_version}')
+    next_version = version.base_version().bump_release(index=index)
+    print(f"[bump] {version} -> {next_version}")
     return next_version
 
 
 def _prebump(version, prebump):
-    next_version = version.bump_release(prebump).bump_dev()
-    print(f'[bump] {version} -> {next_version}')
+    next_version = version.bump_release(index=prebump).bump_dev()
+    print(f"[bump] {version} -> {next_version}")
     return next_version
 
 
@@ -151,3 +160,16 @@ def build_docs(ctx):
     args.extend(["-e", "-M", "-F", f"src/{PACKAGE_NAME}"])
     print("Building docs...")
     ctx.run("sphinx-apidoc {0}".format(" ".join(args)))
+
+
+@invoke.task
+def clean_mdchangelog(ctx):
+    changelog = ROOT / "CHANGELOG.md"
+    content = changelog.read_text()
+    content = re.sub(
+        r"([^\n]+)\n?\s+\[[\\]+(#\d+)\]\(https://github\.com/sarugaku/[\w\-]+/issues/\d+\)",
+        r"\1 \2",
+        content,
+        flags=re.MULTILINE,
+    )
+    changelog.write_text(content)

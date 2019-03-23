@@ -1,14 +1,8 @@
 [packages]
-{{ cookiecutter.package_name }} = { path = '.', editable = true }
+{{ cookiecutter.package_name }} = { path = '.', editable = true, extras = ["dev", "tests"] }
 
 [dev-packages]
-invoke = '*'
-parver = '*'
 towncrier = '*'
-wheel = '*'
-pytest = '*'
-pytest-xdist = '*'
-pytest-cov = '*'
 sphinx = '*'
 sphinx-rtd-theme = '*'
 

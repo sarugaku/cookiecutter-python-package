@@ -101,4 +101,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.typeshed
+
 .vscode/
+
+pip-wheel-metadata
