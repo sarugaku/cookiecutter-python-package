@@ -167,7 +167,7 @@ def clean_mdchangelog(ctx):
     changelog = ROOT / "CHANGELOG.md"
     content = changelog.read_text()
     content = re.sub(
-        r"([^\n]+)\n?\s+\[[\\]+(#\d+)\]\(https://github\.com/sarugaku/[\w\-]+/issues/\d+\)",
+        r"([^\n]+)\n?\s+\[[\\]+(#\d+)\]\(https://github\.com/canonical/[\w\-]+/issues/\d+\)",
         r"\1 \2",
         content,
         flags=re.MULTILINE,
