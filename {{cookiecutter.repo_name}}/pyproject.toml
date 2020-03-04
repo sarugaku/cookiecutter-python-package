@@ -1,8 +1,10 @@
 [build-system]
 requires = ['setuptools>=40.8.0', 'wheel>=0.33.0']
+build-backend = "setuptools.build_meta"
 
 [tool.black]
-line-length = 90
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -11,13 +13,14 @@ exclude = '''
   | \.hg
   | \.mypy_cache
   | \.tox
-  | \.pyre_configuration
   | \.venv
+  | \.pyre_configuration
   | _build
   | buck-out
   | build
   | dist
-)
+  # The following are specific to Black, you probably don't want those.
+)/
 '''
 
 [tool.towncrier]
