@@ -30,8 +30,8 @@ on:
 
 jobs:
   test:
-    name: ${{matrix.os}} / ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}-latest
+    name: $\{\{matrix.os\}\} / $\{\{ matrix.python-version \}\}
+    runs-on: $\{\{ matrix.os \}\}-latest
     strategy:
       fail-fast: false
       matrix:
@@ -41,10 +41,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python $\{\{ matrix.python-version \}\}
       uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: $\{\{ matrix.python-version \}\}
 
     - name: Get python path
       id: python-path
@@ -58,21 +58,21 @@ jobs:
 
     - name: Run tests
       env:
-        PIPENV_DEFAULT_PYTHON_VERSION: ${{ matrix.python-version }}
+        PIPENV_DEFAULT_PYTHON_VERSION: $\{\{ matrix.python-version \}\}
         PYTHONWARNINGS: ignore:DEPRECATION
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        COVERALLS_GIT_COMMIT: ${{ github.sha }}
-        COVERALLS_GIT_BRANCH: ${{ github.ref }}
-        COVERALLS_FLAG_NAME: ${{ matrix.os }}-${{ matrix.python-version }}
+        COVERALLS_REPO_TOKEN: $\{\{ secrets.GITHUB_TOKEN \}\}
+        COVERALLS_GIT_COMMIT: $\{\{ github.sha \}\}
+        COVERALLS_GIT_BRANCH: $\{\{ github.ref \}\}
+        COVERALLS_FLAG_NAME: $\{\{ matrix.os }}-$\{\{ matrix.python-version \}\}
         COVERALLS_SERVICE_NAME: github
-        COVERALLS_SERVICE_JOB_ID: ${{ github.run_id }}
+        COVERALLS_SERVICE_JOB_ID: $\{\{ github.run_id \}\}
         COVERALLS_PARALLEL: true
         PIPENV_NOSPIN: '1'
         CI: '1'
       run: |
         git submodule sync
         git submodule update --init --recursive
-        python -m pipenv install --dev --python=${{ steps.python-path.outputs.path }}
+        python -m pipenv install --dev --python=$\{\{ steps.python-path.outputs.path \}\}
         pipenv run coverage run -p -m pytest -ra tests/
         pipenv run coverage combine
         coveralls
@@ -81,9 +81,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        COVERALLS_GIT_COMMIT: ${{ github.sha }}
-        COVERALLS_GIT_BRANCH: ${{ github.ref }}
+        COVERALLS_REPO_TOKEN: $\{\{ secrets.GITHUB_TOKEN \}\}
+        COVERALLS_GIT_COMMIT: $\{\{ github.sha \}\}
+        COVERALLS_GIT_BRANCH: $\{\{ github.ref \}\}
         COVERALLS_SERVICE_NAME: github
     steps:
     - name: install requests
