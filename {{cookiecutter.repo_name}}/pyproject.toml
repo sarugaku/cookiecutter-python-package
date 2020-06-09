@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 88
-target-version = ['py36', 'py37', 'py38']
+target-version = ['py36']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -19,8 +19,7 @@ exclude = '''
   | buck-out
   | build
   | dist
-  # The following are specific to Black, you probably don't want those.
-)/
+)
 '''
 
 [tool.towncrier]
