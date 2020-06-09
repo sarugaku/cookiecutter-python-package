@@ -1,14 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
 [packages]
-{{ cookiecutter.package_name }} = { path = '.', editable = true }
+{{ cookiecutter.package_name }} = { path = ".", editable = true, extras = ["lint", "release", "dev", "tests"] }
 
 [dev-packages]
-invoke = '*'
-parver = '*'
 towncrier = '*'
-wheel = '*'
-pytest = '*'
-pytest-xdist = '*'
-pytest-cov = '*'
 sphinx = '*'
 sphinx-rtd-theme = '*'
 

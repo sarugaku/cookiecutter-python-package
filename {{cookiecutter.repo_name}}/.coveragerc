@@ -1,10 +1,12 @@
 [run]
 branch = True
+dynamic_context = test_function
 parallel = True
 source = src/{{ cookiecutter.package_name }}/
 
 [report]
 # Regexes for lines to exclude from consideration
+precision = 2
 exclude_lines =
     # Have to re-enable the standard pragma
     pragma: no cover
@@ -18,6 +20,8 @@ exclude_lines =
     raise NotImplementedError
     # Don't complain if non-runnable code isn't run:
     if 0:
+    if False:
+    if MYPY_RUNNING:
     if __name__ == .__main__.:
 
 [html]

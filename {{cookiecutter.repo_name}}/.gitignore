@@ -95,10 +95,17 @@ venv.bak/
 
 # Rope project settings
 .ropeproject
+.vim
 
 # mkdocs documentation
 /site
 
 # mypy
 .mypy_cache/
+.typeshed
+.pyre
+.pytype
+
 .vscode/
+
+pip-wheel-metadata
